@@ -8,14 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var viewModel: AuthViewModel
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        Group{
+            if viewModel.userSession != nil{
+                TabView{
+                    HomeView()
+                        .tabItem() {
+                            Image(systemName: "house.fill")
+                            Text("Home")
+                        }
+                    ProfileView()
+                        .tabItem() {
+                            Image(systemName: "gear")
+                            Text("Profile")
+                        }
+                }
+            }
+            else{
+                LoginView()
+            }
         }
-        .padding()
     }
 }
 
