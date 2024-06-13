@@ -9,7 +9,37 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            HStack{
+//                Resources
+                Button{
+                    print("Resources fetched..")
+                } label: {
+                    Text("Resources")
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .frame(width: 120, height: 40)
+                        .font(.system(size: 16))
+                }
+                .background(Color(.systemBlue))
+                .cornerRadius(10)
+                
+//                Updates
+                Button{
+                    print("Updates fetched..")
+                } label: {
+                    Text("Updates")
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .frame(width: 120, height: 40)
+                        .font(.system(size: 16))
+                }
+                .background(Color(.systemBlue))
+                .cornerRadius(10)
+            }
+            .padding(.top, 25)
+            Spacer()
+        }
     }
 }
 
