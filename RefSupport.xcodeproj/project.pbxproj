@@ -24,6 +24,8 @@
 		F56DB8E12C18D3F50025C782 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F56DB8E02C18D3F50025C782 /* FirebaseStorage */; };
 		F56DB8E52C18D45D0025C782 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56DB8E42C18D45D0025C782 /* AuthViewModel.swift */; };
 		F56DB8E72C18D58C0025C782 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56DB8E62C18D58C0025C782 /* HomeView.swift */; };
+		F5DAF6C22C22D2BE00D0BC6F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DAF6C12C22D2BE00D0BC6F /* CardView.swift */; };
+		F5DAF6C42C22FA3300D0BC6F /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DAF6C32C22FA3300D0BC6F /* Resource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		F56DB8D72C18D3570025C782 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F56DB8E42C18D45D0025C782 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		F56DB8E62C18D58C0025C782 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		F5DAF6C12C22D2BE00D0BC6F /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		F5DAF6C32C22FA3300D0BC6F /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,7 @@
 			children = (
 				F56DB8CD2C17A63C0025C782 /* InputView.swift */,
 				F56DB8D32C17A8A30025C782 /* SettingsRowView.swift */,
+				F5DAF6C12C22D2BE00D0BC6F /* CardView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -127,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				F56DB8D52C17A9C00025C782 /* User.swift */,
+				F5DAF6C32C22FA3300D0BC6F /* Resource.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -263,6 +269,8 @@
 				F56DB8D22C17A7720025C782 /* ProfileView.swift in Sources */,
 				F56DB8D02C17A7100025C782 /* RegistrationView.swift in Sources */,
 				F56DB8D42C17A8A30025C782 /* SettingsRowView.swift in Sources */,
+				F5DAF6C42C22FA3300D0BC6F /* Resource.swift in Sources */,
+				F5DAF6C22C22D2BE00D0BC6F /* CardView.swift in Sources */,
 				F56DB8E52C18D45D0025C782 /* AuthViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+
+struct Link {
+    let title: String
+    let description: String
+    let url: URL
+}
