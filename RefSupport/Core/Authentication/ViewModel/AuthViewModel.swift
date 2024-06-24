@@ -105,4 +105,35 @@ class AuthViewModel: ObservableObject{
             return []
         }
     }
+    
+    func fetchExtendedResources() async -> [Link] {
+        let db = Firestore.firestore()
+        let resourcesRef = db.collection("resources_extended")
+
+        do {
+            let snapshot = try await resourcesRef.getDocuments()
+            var links: [Link] = []
+
+            for document in snapshot.documents {
+                let data = document.data()
+                guard let title = data["title"] as? String,
+                      let description = data["description"] as? String,
+                      let url = data["URL"] as? String else {
+                    print("Invalid document data")
+                    continue
+                }
+
+                if let url = URL(string: url) {
+                    links.append(Link(title: title, description: description, url: url))
+                } else {
+                    print("Invalid URL: \(url)")
+                }
+            }
+
+            return links
+        } catch {
+            print("Error fetching resources: \(error.localizedDescription)")
+            return []
+        }
+    }
 }
