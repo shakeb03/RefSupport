@@ -118,13 +118,15 @@ class AuthViewModel: ObservableObject{
                 let data = document.data()
                 guard let title = data["title"] as? String,
                       let description = data["description"] as? String,
+                      let viewValue = data["viewValue"] as? Int,
+                      let parentField = data["parentField"] as? String,
                       let url = data["URL"] as? String else {
                     print("Invalid document data")
                     continue
                 }
 
                 if let url = URL(string: url) {
-                    links.append(Link(title: title, description: description, url: url))
+                    links.append(Link(title: title, description: description, url: url, viewValue: viewValue, parentField: parentField))
                 } else {
                     print("Invalid URL: \(url)")
                 }

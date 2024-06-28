@@ -48,6 +48,13 @@ struct ProfileView: View {
                 
                 Section("Account"){
                     Button{
+                        print("Edit profile...")
+                        
+                    } label: {
+                        SettingsRowView(imageName: "pencil", title: "Edit Profile", tintColor: .gray)
+                    }
+                    
+                    Button{
                         viewModel.signOut()
                         
                     } label: {
