@@ -13,6 +13,10 @@ protocol AuthenticationFormProtocol{
     var formIsValid: Bool { get }
 }
 
+protocol EditProfileFormProtocol{
+    var formIsValid: Bool { get }
+}
+
 @MainActor
 class AuthViewModel: ObservableObject{
     @Published var userSession: FirebaseAuth.User?
@@ -169,5 +173,16 @@ class AuthViewModel: ObservableObject{
                 return []
             }
         }
+    
+    func updateFullName(of user: User, to newFullName: String) async throws {
+        do {
+            let userRef = Firestore.firestore().collection("users").document(user.id)
+            try await userRef.updateData(["fullname": newFullName])
+//            self.userSession?.displayName = newFullName
+            await fetchUser()
+        } catch {
+            print("Debugging: failed to update full name with error: \(error)")
+        }
+    }
 
 }

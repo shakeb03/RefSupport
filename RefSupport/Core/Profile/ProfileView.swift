@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject var viewModel: AuthViewModel
+    @State private var isShowingEditProfileSheet = false
+    
     var body: some View {
         if let user = viewModel.currentUser{
             List{
@@ -49,10 +51,14 @@ struct ProfileView: View {
                 Section("Account"){
                     Button{
                         print("Edit profile...")
+                        isShowingEditProfileSheet = true
                         
                     } label: {
                         SettingsRowView(imageName: "pencil", title: "Edit Profile", tintColor: .gray)
                     }
+                    .sheet(isPresented: $isShowingEditProfileSheet) {
+                        EditProfileView(user: user, isShowingSheet: self.$isShowingEditProfileSheet)
+                        }
                     
                     Button{
                         viewModel.signOut()
