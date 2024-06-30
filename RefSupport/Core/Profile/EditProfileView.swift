@@ -78,7 +78,5 @@ extension EditProfileView: EditProfileFormProtocol{
 }
 
 #Preview {
-//    @State var isShowingSheet = true
     EditProfileView(user: User(id: NSUUID().uuidString, fullname: "Cristiano Ronaldo", email: "cr@test.com"), isShowingSheet: .constant(true))
-//    EditProfileView()
 }

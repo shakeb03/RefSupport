@@ -31,7 +31,6 @@ struct ExtendedUpdatesView: View {
                     Text("View")
                         .font(.system(size: 10))
                         .fontWeight(.semibold)
-//                    Image(systemName: "arrow.right")
                 }
                 .foregroundColor(.white)
                 .frame(width: UIScreen.main.bounds.width - 350, height: 25)
@@ -39,13 +38,6 @@ struct ExtendedUpdatesView: View {
             .background(Color(.systemBlue))
             .cornerRadius(10)
             .padding(.leading, 25)
-            
-//            Spacer()
-            
-//            Text(selectedLink.description)
-//                .padding(.top, 20)
-//                .font(.system(size: 16))
-//                .padding(.leading, 25)
         
             Spacer()
             

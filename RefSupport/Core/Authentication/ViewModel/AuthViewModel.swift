@@ -25,8 +25,6 @@ class AuthViewModel: ObservableObject{
     
     init(){
         self.userSession = Auth.auth().currentUser
-        print("User session details \(userSession)")
-        
         Task{
             await fetchUser()
         }
@@ -42,7 +40,6 @@ class AuthViewModel: ObservableObject{
             }
             
         } catch let error as NSError {
-            print("DEBUG: failed to login with error \(error)")
             if error.code == 17004 || error.code == 17009 { // or any other error code you're expecting
                 let customError = NSError(domain: "AuthenticationError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid email or password. Please try again."])
                     showErrorPopup(error: customError)
@@ -63,7 +60,7 @@ class AuthViewModel: ObservableObject{
             await fetchUser()
             
         } catch{
-            print("Debugging: failed to create user with error)")
+            showErrorPopup(error: error)
         }
     }
     
@@ -73,7 +70,7 @@ class AuthViewModel: ObservableObject{
             self.userSession = nil
             self.currentUser = nil
         } catch{
-            print("DEBUG: Failed to sign out with error \(error.localizedDescription)")
+            showErrorPopup(error: error)
         }
         
     }
@@ -82,11 +79,9 @@ class AuthViewModel: ObservableObject{
         do {
             let userRef = Firestore.firestore().collection("users").document(user.id)
             try await userRef.updateData(["isDisabled": true])
-//            self.userSession?.displayName = newFullName
-//            await fetchUser()
             signOut()
         } catch {
-            print("Debugging: failed to update full name with error: \(error)")
+            showErrorPopup(error: error)
         }
 
     }
@@ -96,7 +91,6 @@ class AuthViewModel: ObservableObject{
         guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else { return }
         self.currentUser = try? snapshot.data(as: User.self)
         if currentUser?.isDisabled == true {
-            print("Disabled Account can not be accessed")
             let customError = NSError(domain: "AuthenticationError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Account Deactive. Please try after some time."])
             showErrorPopup(error: customError)
             signOut()
@@ -116,20 +110,22 @@ class AuthViewModel: ObservableObject{
                 guard let title = data["title"] as? String,
                       let description = data["description"] as? String,
                       let url = data["URL"] as? String else {
-                    print("Invalid document data")
+                    let customError = NSError(domain: "AuthenticationError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid document data."])
+                    showErrorPopup(error: customError)
                     continue
                 }
 
                 if let url = URL(string: url) {
                     links.append(Link(title: title, description: description, url: url))
                 } else {
-                    print("Invalid URL: \(url)")
+                    let customError = NSError(domain: "AuthenticationError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid Url."])
+                    showErrorPopup(error: customError)
                 }
             }
 
             return links
         } catch {
-            print("Error fetching resources: \(error.localizedDescription)")
+            showErrorPopup(error: error)
             return []
         }
     }
@@ -149,20 +145,22 @@ class AuthViewModel: ObservableObject{
                       let viewValue = data["viewValue"] as? Int,
                       let parentField = data["parentField"] as? String,
                       let url = data["URL"] as? String else {
-                    print("Invalid document data")
+                    let customError = NSError(domain: "AuthenticationError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid document data."])
+                    showErrorPopup(error: customError)
                     continue
                 }
 
                 if let url = URL(string: url) {
                     links.append(Link(title: title, description: description, url: url, viewValue: viewValue, parentField: parentField))
                 } else {
-                    print("Invalid URL: \(url)")
+                    let customError = NSError(domain: "AuthenticationError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])
+                    showErrorPopup(error: customError)
                 }
             }
 
             return links
         } catch {
-            print("Error fetching resources: \(error.localizedDescription)")
+            showErrorPopup(error: error)
             return []
         }
     }
@@ -179,21 +177,21 @@ class AuthViewModel: ObservableObject{
                     guard let title = data["title"] as? String,
                           let description = data["content"] as? String,
                           let datePosted = data["datePosted"] as? String,
-    //                      let viewValue = data["viewValue"] as? Int,
-    //                      let parentField = data["parentField"] as? String,
                           let url = data["URL"] as? String else {
-                        print("Invalid document data")
+                        let customError = NSError(domain: "AuthenticationError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid document data."])
+                        showErrorPopup(error: customError)
                         continue
                     }
                     if let url = URL(string: url) {
                         links.append(Link(title: title, description: description, datePosted: datePosted, url: url))
                     } else {
-                        print("Invalid URL: \(url)")
+                        let customError = NSError(domain: "AuthenticationError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL."])
+                        showErrorPopup(error: customError)
                     }
                 }
                 return links
             } catch {
-                print("Error fetching resources: \(error.localizedDescription)")
+                showErrorPopup(error: error)
                 return []
             }
         }
@@ -202,10 +200,9 @@ class AuthViewModel: ObservableObject{
         do {
             let userRef = Firestore.firestore().collection("users").document(user.id)
             try await userRef.updateData(["fullname": newFullName])
-//            self.userSession?.displayName = newFullName
             await fetchUser()
         } catch {
-            print("Debugging: failed to update full name with error: \(error)")
+            showErrorPopup(error: error)
         }
     }
     

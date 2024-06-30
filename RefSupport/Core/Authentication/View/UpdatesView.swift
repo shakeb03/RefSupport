@@ -23,7 +23,6 @@ struct UpdatesView: View {
                             .padding(.top, 35)
                             .onTapGesture {
                                 // Handle tap gesture to open the link
-//                                UIApplication.shared.open(link.url)
                                 isPresented = true
                                 selectedLink = link
                                 print(selectedLink)
@@ -38,7 +37,6 @@ struct UpdatesView: View {
         }
         .sheet(isPresented: $isPresented) {
                     if let selectedLink = selectedLink {
-//                        LinkDetailView(link: selectedLink)
                         ExtendedUpdatesView(selectedLink: selectedLink)
                     }
                 }

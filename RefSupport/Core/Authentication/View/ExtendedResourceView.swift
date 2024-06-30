@@ -9,22 +9,6 @@ import SwiftUI
 
 struct ExtendedResourceView: View {
     
-    let dummy_links = [
-            Link(title: "Link 1", description: "This is a description of link 1", url: URL(string: "https://www.example.com/link1")!),
-            Link(title: "Link 2", description: "This is a description of link 2", url: URL(string: "https://www.google.com")!),
-            Link(title: "Link 3", description: "This is a description of link 3", url: URL(string: "https://www.example.com/link3")!),
-            Link(title: "Link 1", description: "This is a description of link 1", url: URL(string: "https://www.example.com/link1")!),
-            Link(title: "Link 2", description: "This is a description of link 2", url: URL(string: "https://www.example.com/link2")!),
-            Link(title: "Link 3", description: "This is a description of link 3", url: URL(string: "https://www.example.com/link3")!),
-            Link(title: "Link 1", description: "This is a description of link 1", url: URL(string: "https://www.example.com/link1")!),
-            Link(title: "Link 2", description: "This is a description of link 2", url: URL(string: "https://www.example.com/link2")!),
-            Link(title: "Link 3", description: "This is a description of link 3", url: URL(string: "https://www.example.com/link3")!),
-            Link(title: "Link 1", description: "This is a description of link 1", url: URL(string: "https://www.example.com/link1")!),
-            Link(title: "Link 2", description: "This is a description of link 2", url: URL(string: "https://www.example.com/link2")!),
-            Link(title: "Link 3", description: "This is a description of link 3", url: URL(string: "https://www.example.com/link3")!)
-            
-        ]
-    
     let links: [Link]
     let selectedLink: Link
     

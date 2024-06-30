@@ -40,8 +40,6 @@ struct LoginView: View {
                     .padding(.top, 12)
                     
                     // sign in button
-                    
-                    
                     Button{
                         Task{
                             isLoading = true
@@ -66,7 +64,6 @@ struct LoginView: View {
                     
                     Spacer()
                     // sign up link
-                    
                     NavigationLink {
                         RegistrationView()
                             .navigationBarBackButtonHidden(true)
@@ -97,6 +94,5 @@ extension LoginView: AuthenticationFormProtocol{
 
 #Preview {
     LoginView()
-//        .environmentObject(AuthViewModel())
 }
 

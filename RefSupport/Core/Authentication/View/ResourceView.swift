@@ -24,7 +24,6 @@ struct ResourceView: View {
                             .padding(.top, 35)
                             .onTapGesture {
                                 // Handle tap gesture to open the link
-//                                UIApplication.shared.open(link.url)
                                 isPresented = true
                                 selectedLink = link
                                 print(link.url)
@@ -40,7 +39,6 @@ struct ResourceView: View {
         }
         .sheet(isPresented: $isPresented) {
                     if let selectedLink = selectedLink {
-//                        LinkDetailView(link: selectedLink)
                         ExtendedResourceView(links: links, selectedLink: selectedLink)
                     }
                 }
