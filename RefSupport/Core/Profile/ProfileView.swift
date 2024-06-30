@@ -68,7 +68,10 @@ struct ProfileView: View {
                     }
                     
                     Button{
-                        print("Deactivate..")
+                        Task{
+                            try await viewModel.disableAccount(user: viewModel.currentUser!)
+                        }
+                        
                         
                     } label: {
                         SettingsRowView(imageName: "xmark.circle.fill", title: "Deactivate Account", tintColor: .red)

@@ -36,8 +36,11 @@ class AuthViewModel: ObservableObject{
     func signIn(withEmail email: String, password: String) async throws{
         do{
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
-            self.userSession = result.user
             await fetchUser()
+            if let currentUser = currentUser, !(currentUser.isDisabled ?? false) {
+                self.userSession = result.user
+            }
+            
         } catch{
             print("DEBUG: failed to login with error \(error)")
         }
@@ -48,7 +51,7 @@ class AuthViewModel: ObservableObject{
         do{
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
-            let user = User(id: result.user.uid , fullname: fullname, email: email)
+            let user = User(id: result.user.uid , fullname: fullname, email: email, isDisabled: false)
             let encodedUser = try Firestore.Encoder().encode(user)
             try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser)
             await fetchUser()
@@ -69,14 +72,27 @@ class AuthViewModel: ObservableObject{
         
     }
     
-    func disableAccount(){
-        
+    func disableAccount(user: User) async{
+        do {
+            let userRef = Firestore.firestore().collection("users").document(user.id)
+            try await userRef.updateData(["isDisabled": true])
+//            self.userSession?.displayName = newFullName
+//            await fetchUser()
+            signOut()
+        } catch {
+            print("Debugging: failed to update full name with error: \(error)")
+        }
+
     }
     
     func fetchUser() async{
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else { return }
         self.currentUser = try? snapshot.data(as: User.self)
+        if currentUser?.isDisabled == true {
+            print("Disabled Account can not be accessed")
+            signOut()
+        }
     }
     
     func fetchResources() async -> [Link] {
