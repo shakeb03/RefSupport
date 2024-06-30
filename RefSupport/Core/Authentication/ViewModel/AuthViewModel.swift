@@ -41,8 +41,14 @@ class AuthViewModel: ObservableObject{
                 self.userSession = result.user
             }
             
-        } catch{
+        } catch let error as NSError {
             print("DEBUG: failed to login with error \(error)")
+            if error.code == 17004 || error.code == 17009 { // or any other error code you're expecting
+                let customError = NSError(domain: "AuthenticationError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid email or password. Please try again."])
+                    showErrorPopup(error: customError)
+                        } else {
+                            showErrorPopup(error: error)
+                        }
         }
         
     }
@@ -91,6 +97,8 @@ class AuthViewModel: ObservableObject{
         self.currentUser = try? snapshot.data(as: User.self)
         if currentUser?.isDisabled == true {
             print("Disabled Account can not be accessed")
+            let customError = NSError(domain: "AuthenticationError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Account Deactive. Please try after some time."])
+            showErrorPopup(error: customError)
             signOut()
         }
     }
@@ -199,6 +207,13 @@ class AuthViewModel: ObservableObject{
         } catch {
             print("Debugging: failed to update full name with error: \(error)")
         }
+    }
+    
+    func showErrorPopup(error: Error) {
+        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        // Present the alert
+        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
     }
 
 }

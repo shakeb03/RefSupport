@@ -10,6 +10,7 @@ import SwiftUI
 struct EditProfileView: View {
     
     @EnvironmentObject var viewModel: AuthViewModel
+    @State private var isLoading = false
     
     @Binding var isShowingSheet: Bool
     let user: User
@@ -22,42 +23,49 @@ struct EditProfileView: View {
         }
     
     var body: some View {
-        
-        VStack{
-            Text(user.initials )
-                .font(.title)
-                .fontWeight(.semibold)
-                .foregroundColor(.white)
-                .frame(width: 100, height: 100)
-                .background(Color(.systemGray3))
-                .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                .padding(40)
-            
-            InputView(text: $fullName, title: "Full Name", placeholder: "Enter Full Name")
-                .padding(.horizontal)
+        if isLoading{
+            ProgressView()
+                .progressViewStyle(CircularProgressViewStyle())
+                .scaleEffect(3)
+        } else {
+            VStack{
+                Text(user.initials )
+                    .font(.title)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white)
+                    .frame(width: 100, height: 100)
+                    .background(Color(.systemGray3))
+                    .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+                    .padding(40)
+                
+                InputView(text: $fullName, title: "Full Name", placeholder: "Enter Full Name")
+                    .padding(.horizontal)
+                    .padding(.top, 12)
+                
+                Button{
+                    Task{
+                        print("edit")
+                        isLoading = true
+                        try await viewModel.updateFullName(of: user, to: fullName)
+                        isLoading = false
+                        isShowingSheet = false
+                    }
+                } label: {
+                    HStack{
+                        Text("Update Profile")
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundColor(.white)
+                    .frame(width: UIScreen.main.bounds.width - 32, height: 48)
+                }
+                .background(Color(.systemBlue))
+                .disabled(!formIsValid)
+                .opacity(formIsValid ? 1.0 : 0.5)
+                .cornerRadius(10)
                 .padding(.top, 12)
-            
-            Button{
-                Task{
-                    print("edit")
-                    try await viewModel.updateFullName(of: user, to: fullName)
-                    isShowingSheet = false
-                }
-            } label: {
-                HStack{
-                    Text("Update Profile")
-                        .fontWeight(.semibold)
-                }
-                .foregroundColor(.white)
-                .frame(width: UIScreen.main.bounds.width - 32, height: 48)
+                Spacer()
+                
             }
-            .background(Color(.systemBlue))
-            .disabled(!formIsValid)
-            .opacity(formIsValid ? 1.0 : 0.5)
-            .cornerRadius(10)
-            .padding(.top, 12)
-            Spacer()
-            
         }
     }
 }
