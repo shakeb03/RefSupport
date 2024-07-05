@@ -12,6 +12,7 @@ import Firebase
 struct RefSupportApp: App {
     @StateObject var viewModel = AuthViewModel()
     
+    
     init(){
         FirebaseApp.configure()
     }
@@ -19,6 +20,7 @@ struct RefSupportApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(viewModel)
+                .preferredColorScheme(.light)
         }
     }
 }
