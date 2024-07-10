@@ -86,6 +86,18 @@ struct ProfileView: View {
                         } label: {
                             SettingsRowView(imageName: "xmark.circle.fill", title: "Deactivate Account", tintColor: .red)
                         }
+                        
+                        Button{
+                            Task{
+                                isLoading = true
+                                try await viewModel.deleteAccount(user: viewModel.currentUser!)
+                                isLoading = false
+                            }
+                            
+                            
+                        } label: {
+                            SettingsRowView(imageName: "xmark.circle.fill", title: "Delete Account", tintColor: .red)
+                        }
                     }
                 }
             }
